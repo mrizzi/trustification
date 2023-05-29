@@ -4702,7 +4702,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bombastic",
+ "bombastic-api",
+ "bombastic-indexer",
  "clap",
+ "futures",
  "serde",
  "serde_json",
  "spog",
@@ -4710,6 +4713,8 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "vexination",
+ "vexination-api",
+ "vexination-indexer",
 ]
 
 [[package]]

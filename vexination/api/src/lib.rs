@@ -26,6 +26,15 @@ pub struct Run {
 }
 
 impl Run {
+    pub fn new() -> Self {
+        Run {
+            bind: "0.0.0.0".to_string(),
+            port: 8081,
+            devmode: true,
+            storage_endpoint: None,
+        }
+    }
+
     pub async fn run(self) -> anyhow::Result<ExitCode> {
         let storage = trustification_storage::create("vexination", self.devmode, self.storage_endpoint)?;
         let addr = SocketAddr::from_str(&format!("{}:{}", self.bind, self.port))?;

@@ -32,6 +32,17 @@ pub struct Run {
 }
 
 impl Run {
+    pub fn new() -> Self {
+        Run {
+            bind: "0.0.0.0".to_string(),
+            port: 8082,
+            index: None,
+            sync_interval_seconds: 10,
+            devmode: true,
+            storage_endpoint: None,
+        }
+    }
+
     pub async fn run(self) -> anyhow::Result<ExitCode> {
         let index: PathBuf = self.index.unwrap_or_else(|| {
             use rand::RngCore;

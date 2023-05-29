@@ -67,7 +67,7 @@ pub async fn run<B: Into<SocketAddr>>(
     });
     let addr = bind.into();
     tracing::debug!("listening on {}", addr);
-    HttpServer::new(move || {
+    let server = HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
             .app_data(web::PayloadConfig::new(10 * 1024 * 1024))
@@ -80,8 +80,9 @@ pub async fn run<B: Into<SocketAddr>>(
             )
     })
     .bind(&addr)?
-    .run()
-    .await?;
+    .run();
+    server.await?;
+
     Ok(())
 }
 
