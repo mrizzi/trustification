@@ -26,10 +26,10 @@ pub struct Run {
 }
 
 impl Run {
-    pub fn new() -> Self {
+    pub fn new(port: u16) -> Self {
         Run {
             bind: "0.0.0.0".to_string(),
-            port: 8081,
+            port: port,
             devmode: true,
             storage_endpoint: None,
         }

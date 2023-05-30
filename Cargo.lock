@@ -4709,6 +4709,7 @@ dependencies = [
  "serde",
  "serde_json",
  "spog",
+ "spog-search",
  "tokio",
  "tracing",
  "tracing-subscriber",

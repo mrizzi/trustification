@@ -50,6 +50,20 @@ pub struct Run {
 const SCHEMA: &str = include_str!("../../schemas/index.sql");
 
 impl Run {
+    pub fn new() -> Self {
+        Run {
+            index: None,
+            kafka_bootstrap_servers: "localhost:9092".to_string(),
+            events: Events::Kafka,
+            stored_topic: "sbom-stored".to_string(),
+            indexed_topic: "sbom-indexed".to_string(),
+            failed_topic: "sbom-failed".to_string(),
+            sync_interval_seconds: 10,
+            devmode: true,
+            storage_endpoint: None,
+        }
+    }
+
     pub async fn run(self) -> anyhow::Result<ExitCode> {
         let index: PathBuf = self.index.unwrap_or_else(|| {
             use rand::RngCore;

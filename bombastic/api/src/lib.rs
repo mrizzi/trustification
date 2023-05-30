@@ -32,10 +32,10 @@ pub struct Run {
 }
 
 impl Run {
-    pub fn new() -> Self {
+    pub fn new(port: u16) -> Self {
         Run {
             bind: "0.0.0.0".to_string(),
-            port: 8082,
+            port: port,
             index: None,
             sync_interval_seconds: 10,
             devmode: true,

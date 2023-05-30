@@ -47,6 +47,20 @@ pub struct Run {
 }
 
 impl Run {
+    pub fn new() -> Self {
+        Run {
+            index: None,
+            kafka_bootstrap_servers: "localhost:9092".to_string(),
+            events: Events::Kafka,
+            stored_topic: "vex-stored".to_string(),
+            indexed_topic: "vex-indexed".to_string(),
+            failed_topic: "vex-failed".to_string(),
+            sync_interval_seconds: 10,
+            devmode: true,
+            storage_endpoint: None,
+        }
+    }
+
     pub async fn run(self) -> anyhow::Result<ExitCode> {
         let index_dir: PathBuf = self.index.unwrap_or_else(|| {
             use rand::RngCore;
