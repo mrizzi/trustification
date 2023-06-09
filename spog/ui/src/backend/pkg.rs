@@ -1,8 +1,10 @@
 use super::{Backend, Error};
 use crate::backend::{
+    SearchOptions,
     data::{Package, PackageDependencies, PackageDependents, PackageList, PackageRef},
     Endpoint,
 };
+use spog_model::prelude::*;
 use packageurl::PackageUrl;
 use serde::Deserialize;
 
@@ -53,11 +55,21 @@ impl PackageService {
         self.batch_to_refs("/api/package/dependents", purls).await
     }
 
-    pub async fn search<'a, I>(&self, purls: I) -> Result<PackageDependents, Error>
-    where
-        I: IntoIterator<Item = PackageUrl<'a>>,
-    {
-        self.batch_to_refs("/api/package/search", purls).await
+    pub async fn search_packages(
+        &self,
+        q: &str,
+        options: &SearchOptions,
+    ) -> Result<SearchResult<Vec<PackageSummary>>, Error> {
+        let request = self
+            .client
+            .get(self.backend.join(Endpoint::Api, "/api/v1/package/search")?)
+            .query(&[("q", q)]);
+
+        let request = options.apply(request);
+
+        let response = request.send().await?;
+
+        Ok(response.error_for_status()?.json().await?)
     }
 
     /// common call of getting some refs for a batch of purls
